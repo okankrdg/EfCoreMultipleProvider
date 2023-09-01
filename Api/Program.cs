@@ -2,6 +2,7 @@ using Data;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Api.Extensions;
+using Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,5 +31,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/user-insert", (UserContext context) =>
+{
+    context.Users.Add(new User { Name = "Banu" });
+    context.SaveChanges();
+    return Results.Ok();
+});
 
 app.Run();
